@@ -7,7 +7,6 @@ class AuthController extends GetxController {
 
   Stream<User?> get streamAuthStatus => auth.authStateChanges();
 
-  //signup
   void signup(String emailAddress, String password) async {
     try {
       UserCredential myUser = await auth.createUserWithEmailAndPassword(
@@ -35,7 +34,6 @@ class AuthController extends GetxController {
     }
   }
 
-  //login
   void login(String email, String pass) async {
     try {
       final credential = await auth.signInWithEmailAndPassword(
@@ -44,14 +42,14 @@ class AuthController extends GetxController {
       );
 
       if (credential.user!.emailVerified) {
-        Get.offAll(Routes.HOME);
+        Get.offAllNamed(Routes.HOME);
       } else {
         Get.defaultDialog(
-          title: "Proses Gagal!",
-          middleText: "Harap Verifikasi Email Terlebih Dahulu",
+          title: "Proses Gagal !",
+          middleText: "Harap Verifikasi Email terlebih dahulu.",
           textConfirm: "OK",
           onConfirm: () {
-            Get.back();
+            Get.back(); //close dialog
           },
         );
       }
@@ -100,4 +98,5 @@ class AuthController extends GetxController {
           title: "Terjadi kesalahan", middleText: "Email tidak valid");
     }
   }
+
 }
