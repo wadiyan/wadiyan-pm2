@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:myapp/app/controllers/auth_controller.dart';
+import 'package:myapp/app/modules/dosen/views/dosen_add_view.dart';
+import 'package:myapp/app/modules/dosen/views/dosen_view.dart';
+import 'package:myapp/app/modules/mahasiswa/views/mahasiswa_add_view.dart';
 import 'package:myapp/app/modules/mahasiswa/views/mahasiswa_view.dart';
 
 import '../controllers/home_controller.dart';
@@ -27,10 +30,26 @@ class _DashboardAdminState extends State<DashboardAdmin> {
   final cAuth = Get.find<AuthController>();
   int _index = 0;
   final List<Map> _fragment = [
-    {'title': 'Dashboard', 'view': MahasiswaView()},
-    {'title': 'Data Mahasiswa', 'view': MahasiswaView()},
-    {'title': 'Data Dosen', 'view': MahasiswaView()},
-    {'title': 'Data Pegawai', 'view': MahasiswaView()},
+    {
+      'title': 'Dashboard',
+      'view': MahasiswaView(),
+      'add': () => MahasiswaAddView()
+    },
+    {
+      'title': 'Data Mahasiswa',
+      'view': MahasiswaView(),
+      'add': () => MahasiswaAddView()
+    },
+    {
+      'title': 'Data Dosen',
+      'view': DosenView(),
+      'add': () => DosenAddView()
+    },
+    {
+      'title': 'Data Pegawai',
+      'view': MahasiswaView(),
+      'add': () => MahasiswaAddView()
+    },
   ];
 
   @override
@@ -41,6 +60,12 @@ class _DashboardAdminState extends State<DashboardAdmin> {
         backgroundColor: Colors.blue,
         titleSpacing: 0,
         title: Text(_fragment[_index]['title']),
+        actions: [
+          IconButton(
+            onPressed: () => Get.to(_fragment[_index]['add']),
+            icon: Icon(Icons.add_circle_outline),
+          )
+        ],
       ),
       body: _fragment[_index]['view'],
     );
